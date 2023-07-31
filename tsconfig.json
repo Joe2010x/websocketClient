@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "public/EmptyPage.tsx", "public/ErrorPage.tsx"  ]
 }
