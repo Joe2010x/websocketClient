@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { PostObj, Post } from './components/Post';
@@ -20,6 +20,7 @@ function App() {
   const [posts, setPosts] = useState<PostObj[]>([]);
   const [socketUrl, setSocketUrl] = useState<string>('ws://127.0.0.1:5501/EchoAll');
   const [author, setAuthor] = useState<Author | null> (null);
+  const messageEndRef = useRef<null | HTMLDivElement>(null);
   
   const [outMessage, setOutMessage] = useState<outMessageType>({changed:[] ,added:[] , deletedIds:[]});
 
@@ -47,11 +48,27 @@ function App() {
   useEffect(() => {
     if (lastMessage !== null && lastMessage.data !== null) {
       setPosts(ProcessIncomingData(lastMessage.data,posts));
-      setOutMessage({changed:[] ,added:[] , deletedIds:[]});
     }
   }, [lastMessage]);
 
-  const handleClickSendMessage = useCallback(() => sendMessage(JSON.stringify({outMessage:outMessage,prevPosts:posts})), [outMessage]);
+  useEffect(()=>{
+    messageEndRef.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  },[posts])
+
+  // messageEndRef.current.value = "";
+
+  const getPost = (newPost : PostObj) => {
+    console.log(newPost);
+    sendMessage(JSON.stringify({outMessage:{changed:[] ,added:[newPost] , deletedIds:[]},prevPosts:posts}));
+  }
+  
+  // const handleClickSendMessage = 
+  //   useCallback(
+  //   () => {
+  //   sendMessage(JSON.stringify({outMessage:outMessage,prevPosts:posts}));
+  //   setOutMessage({changed:[] ,added:[] , deletedIds:[]});
+  //   }
+  //   , [outMessage]);
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
@@ -72,15 +89,20 @@ function App() {
             <div className='Posts' style={{backgroundColor: color.c3}}>
             {
               posts.length == 0 ?
-              < EmptyPage/> : posts.map((p, index) => <Post key={index} post={p} getDeleteId={getDeleteId}/>)
+              < EmptyPage/> : posts.map((p, index) => 
+                <Post key={index} post={p} getDeleteId={getDeleteId}/>)
             }
+              <div className='messageEndRef' ref = {messageEndRef} />
             </div>
-            <button className='barButton-confirm'
+            {/* <button className='barButton-confirm'
               onClick={handleClickSendMessage}
               disabled={readyState !== ReadyState.OPEN}>
               Confirm Updates
-            </button>
-            <EditorBlock author = {author} getNewPost = {getNewPost}/>
+            </button> */}
+            <EditorBlock 
+              author = {author} 
+              //getNewPost = {getNewPost} 
+              getPost = {getPost}/>
           </div>
         }
       </div>

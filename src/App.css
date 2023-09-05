@@ -72,9 +72,16 @@
   border-radius: 1rem;
   margin: 0 5%;
   padding-top: 1rem;
-  overflow: scroll;
+  /* overflow: scroll; */
   scrollbar-width: thick;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
+
+/* .messageEndRef {
+  margin: 5%;
+} */
 
 .avatar {
   height: 3rem;
@@ -91,7 +98,7 @@
 }
 
 .EditorBlock {
-  margin: 0 10%;
+  margin: 10% 10%;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
