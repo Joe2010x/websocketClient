@@ -13,14 +13,15 @@ type landingPageType = {
 
 export const LandingPage = ({ getAuthor, setStatus, logo }: landingPageType) => {
 
-    const [name, setName] = useState<string>("");
+    // const [name, setName] = useState<string>("");
 
-    const handleClick = () => {
-
+    const handleClick = (name : string) => {
+        
         const author = {
             name: name,
             avatar: "https://api.multiavatar.com/" + name + ".svg"
         }
+        console.log(author);
         getAuthor(author);
         setStatus("Content");
     }
@@ -53,7 +54,7 @@ export const LandingPage = ({ getAuthor, setStatus, logo }: landingPageType) => 
             </div>
 
             <div className="landingInputDiv">
-                <InputWithButton text={"name"} />
+                <InputWithButton text={"name"} getName= {handleClick}/>
             </div>
         </div>
     )
