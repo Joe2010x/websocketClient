@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 import logo from './logo.svg';
+import logoCat from './logoCat.png';
 import './App.css';
 import { PostObj, Post } from './components/Post';
 //import { posts } from './Seed';
-import { useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { LandingPage } from './components/LandingPage';
 import { Author } from './components/Author';
@@ -82,7 +82,8 @@ function App() {
     <div className="App" >
      
       <div className='body'>
-        {status === "Landing" && <LandingPage setStatus={setStatus} getAuthor={getAuthor} />}
+        {status === "Landing" && <LandingPage 
+          setStatus={setStatus} getAuthor={getAuthor} logo = {logoCat} />}
         {status == "Content" &&
           <div>
             <p>WebSocket is {connectionStatus}</p>

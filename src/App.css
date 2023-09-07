@@ -97,6 +97,10 @@
   top: -.5rem;
 }
 
+.inputBox {
+  z-index: 10001;
+}
+
 .EditorBlock {
   margin: 10% 10%;
   border-radius: 1rem;
@@ -104,6 +108,40 @@
   flex-direction: column;
   position: relative;
   height: 20vh;
+}
+
+.landingPageContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* background-color: lightgray; */
+}
+
+.landingLogoDiv {
+  height: 10rem;
+  width: 20rem;
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landingInputDiv {
+  height: 10rem;
+  width: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: aqua; */
+}
+.landingLogoImg{
+  object-fit: scale-down;
+  height : 60%;
+  width : 60%;
 }
 
 .PostBtn {
