@@ -49,3 +49,66 @@ export const color5 = {
 }
 
 export const color = color5;
+
+export const colors = [
+    {
+        c1: "#FFCC70",
+        c2: "#FFFADD",
+        c3: "#8ECDDD",
+        c4: "#22668D",
+    },
+    {
+        c1:"#EF9595",
+        c2:"#EFB495",
+        c3:"#EFD595",
+        c4:"#EBEF95"
+    },
+    {
+        c1:"#016A70",
+        c2:"#FFFFDD",
+        c3:"#D2DE32",
+        c4:"#A2C579"
+    },
+    {
+        c1:"#9A3B3B",
+        c2:"#C08261",
+        c3:"#E2C799",
+        c4:"#F2ECBE"
+    },
+    {
+        c1:"#FFF5E4",
+        c2:"#FFE3E1",
+        c3:"#FFD1D1",
+        c4:"#FF9494"
+    },
+    {
+        c1:"#D14D72",
+        c2:"#FFABAB",
+        c3:"#FCC8D1",
+        c4:"#FEF2F4"
+    },
+    {
+        c1:"#191D88",
+        c2:"#1450A3",
+        c3:"#337CCF",
+        c4:"#FFC436"
+    },
+    {
+        c1:"#FFA1F5",
+        c2:"#BC7AF9",
+        c3:"#F8FF95",
+        c4:"#A6FF96"
+    },
+    {
+        c1:"#F67280",
+        c2:"#C06C84",
+        c3:"#6C5B7B",
+        c4:"#355C7D"
+    },
+    {
+        c1:"#D3F6D1",
+        c2:"#A7D7C5",
+        c3:"#74B49B",
+        c4:"#5C8D89"
+    }
+]
