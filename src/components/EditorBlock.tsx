@@ -5,6 +5,7 @@ import { color } from '../services/Color'
 import { PostObj } from './Post'
 import { v4 as uuidv4 } from 'uuid';
 import { outMessageType } from '../services/SomeTypes'
+import { InputWithButton } from '../ui/InputText'
 
 type EditorBlockType = {
     author: Author | null,
@@ -18,31 +19,34 @@ type EditorBlockType = {
 
 export const EditorBlock = ({ author, getPost, changedPost, getChangedPost}: EditorBlockType) => {
     const [title, setTitle] = useState<string>("");
-    const [content, setContent] = useState<string>( "");
+    const [content, setContent] = useState<string>("");
+    const [placeholder, setPlaceholder] = useState<string>("");
 
     useEffect(() => {
         if (changedPost !== null) {
             console.log("it is changed post", changedPost.content);
             setContent(changedPost.content);
+            setPlaceholder(changedPost.content);
         }
 
     }, [changedPost])
 
-    const handlePost = () => {
+    const handlePost = (text : string) => {
         let post: PostObj = {
             id: changedPost ? changedPost.id : uuidv4(),
             title: title,
-            content: content,
+            content: text,
             created: new Date(Date.now()),
             author: author!
         }
         setTitle("");
         setContent("");
         if (post.content !== "") {
-            if (changedPost) getChangedPost(post);
+            if (changedPost) {
+                getChangedPost(post);
+            }
             else getPost(post);
         }
-        //getNewPost(post);
     }
 
     return (
@@ -50,20 +54,13 @@ export const EditorBlock = ({ author, getPost, changedPost, getChangedPost}: Edi
             style={{ backgroundColor: color.c4 }}>
             <div className='Editor-Author'>
                 <img className='avatar' src={author?.avatar} />
-                <span>Author: {author?.name}</span>
+                <span> {author?.name}</span>
             </div>
-            {/* <div className='Editor-Title'>
-                <span>Title</span>
-                <input onChange={(e) => setTitle(e.target.value)}
-                    value={title}></input>
-            </div> */}
-            <input className='Editor-Content' onChange={e => setContent(e.target.value)} value={content} />
-            <button
-                className='PostBtn'
-                style={{ backgroundColor: color.c1 }}
-                onClick={handlePost}>
-                Post
-            </button>
+            <div className='Editor-Content '>
+                {(content || content === "") && <InputWithButton text={content} placeholder={placeholder} getName={handlePost}/>}
+                {/* <input value = {content} getName = {handlePost}/>
+                <button /> */}
+            </div>
         </div>
     )
 }

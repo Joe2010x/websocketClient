@@ -4,6 +4,7 @@ import { colorType } from "../services/Color";
 import { InputWithButton } from "../ui/InputText";
 import { LeadGrid } from "../ui/Grid";
 import { Container, Grid, SimpleGrid, Skeleton, useMantineTheme, rem, Flex } from '@mantine/core';
+import { v4 as uuidv4 } from 'uuid';
 
 type landingPageType = {
     getAuthor: (author: Author) => void,
@@ -19,13 +20,12 @@ type landingPageType = {
 
 export const LandingPage = ({ getAuthor, setStatus, logo, color }: landingPageType) => {
 
-    // const [name, setName] = useState<string>("");
-
     const handleClick = (name : string) => {
         
         const author = {
             name: name,
-            avatar: "https://api.multiavatar.com/" + name + ".svg"
+            avatar: "https://api.multiavatar.com/" + name + ".svg",
+            id : uuidv4()
         }
         console.log(author);
         getAuthor(author);
@@ -46,28 +46,18 @@ export const LandingPage = ({ getAuthor, setStatus, logo, color }: landingPageTy
     }
 
     return (
-        // <div className="landingPage" style={{backgroundColor: color.c2}}>
-        //     <p>Please enter your name here</p>
-        //     <input className="barName"
-        //         onChange = {(e)=> setName(e.target.value) }
-        //     ></input>
-        //     <button className="barButton" 
-        //         onClick = {handleClick}
-        // >Connect</button>
-        // </div>
         <div className="landingPageContainer" 
-            style= {{display: "flex", flexDirection:"row", gap:"1rem"}}
-        
+            style= {{display: "flex", flexDirection:"row", gap:"1rem", justifyContent:"space-evenly"}}
         >
-
             <div className="landingLogoDiv" >
-
                 <img src={logo} className="landingLogoImg" />
                 <h1>Talktive Kat</h1>
             </div>
 
-            <div className="landingInputDiv" style={style}>
-                <InputWithButton text={"name"} getName= {handleClick} />
+            <div className="landingInputDiv" 
+                style = {{backgroundColor:"lightgray", borderRadius:"2rem"}}>
+                <InputWithButton text={""} getName= {handleClick} placeholder={"name"}/>
+                {/* custom input + buttom */}
             </div>
         </div>
     )

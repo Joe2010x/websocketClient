@@ -2,6 +2,7 @@
 import { Author } from './Author';
 import { AuthorComponent } from './Author';
 import { color } from '../services/Color';
+import { useState } from 'react';
 
 export interface PostObj {
     id: string;
@@ -13,32 +14,38 @@ export interface PostObj {
 }
 
 type props = {
-    post : PostObj,
-    getDeleteId : (id:string) => void,
-    getChangedId : (id:string) => void
+    post: PostObj,
+    owner: Author | null,
+    getDeleteId: (id: string) => void,
+    getChangedId: (id: string) => void
 }
 
-export const Post = ({ post, getDeleteId, getChangedId }: props) => {
-    const handleDelete = () =>{
-        getDeleteId (post.id);
+export const Post = ({ post, owner, getDeleteId, getChangedId }: props) => {
+    const [buttonVisuability, setButtonVisuability] = useState(false);
+    const handleDelete = () => {
+        getDeleteId(post.id);
     };
-    const hangleChanged = () =>{
-        getChangedId (post.id);
+    const hangleChanged = () => {
+        getChangedId(post.id);
     }
     return (
-        <div className='post' style={{backgroundColor: color.c5}}>
-            <div className='post-name'>
+        <div>
+        <div className='post' >
+            
+            <div className='post-name' style={{backgroundColor:color.c4}}>
                 <img className='avatarPost' src={post.author?.avatar} />
                 <span>{post.author?.name}</span>
-                <button className='DelBtn' onClick={handleDelete}>Delete</button>
-                <button className='DelBtn' onClick={hangleChanged}>change</button>
+                
+            </div>
+            <div className='post-content' style={{backgroundColor:color.c4}} onClick = {() => setButtonVisuability(!buttonVisuability)}>
+                {/* <h2>{post.title ?? ""}</h2> */}
+                <p className='post-content-words'>{post.content}</p>
+                {owner?.id === post.author.id && buttonVisuability && <button className='DelBtn' onClick={handleDelete}>x</button>}
+                {owner?.id === post.author.id && buttonVisuability && <button className='ChangeBtn' onClick={hangleChanged}>change</button>}
+            </div>
 
-            </div>
-            <div className='post-content'>
-                <h2>{post.title ?? ""}</h2>
-                <p>{post.content}</p>
-                <span>{post.created.toString()}</span>
-            </div>
+        </div>
+            <span>{post.created.toString()}</span>
         </div>
     )
 }

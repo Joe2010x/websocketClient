@@ -14,6 +14,8 @@ import { outDTO, outMessageType } from './services/SomeTypes';
 import { ProcessIncomingData } from './services/IncomingData';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
+import Header from './pages/Header';
+import Footer from './pages/Footer';
 
 function App() {
   const [status, setStatus] = useState<string>("Landing");
@@ -23,64 +25,27 @@ function App() {
   const messageEndRef = useRef<null | HTMLDivElement>(null);
   const [color, setColor] = useState<colorType>(colors[Math.floor(Math.random() * colors.length)]);
   const [changedPost, setChangedPost] = useState<PostObj | null> (null);
-
-  // const [outMessage, setOutMessage] = useState<outMessageType>({ changed: [], added: [], deletedIds: [] });
-
-  const getAuthor = (author: Author) => { setAuthor(author); }
-  const getDeleteId = (id: string) => {
-    // console.log("delete  ", id);
-    sendMessage(JSON.stringify({ outMessage: { changed: [], added: [], deletedIds: [id] }, prevPosts: posts }));
-  }
-
-  const getChangedId = (id: string) => {
-    // console.log("changed id ", id);
-    // console.log("find changed post, ",posts.find(p => p.id === id) );
-    setChangedPost(posts.find(p => p.id === id) ?? null);
-    // setOutMessage((prev) => {
-    //   return {
-    //     changed: prev.changed,
-    //     added: prev.added,
-    //     deletedIds: prev.deletedIds.concat(id)
-    //   }
-    // });
-    // sendMessage(JSON.stringify({ outMessage: { changed: [], added: [], deletedIds: [] }, prevPosts: posts }));
-  }
-
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
-
+  
   useEffect(() => {
     console.log("Trigger receing message ",lastMessage);
     if (lastMessage !== null && lastMessage.data !== null) {
       setPosts(ProcessIncomingData(lastMessage.data, posts));
     }
   }, [lastMessage]);
-
+  
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
   }, [posts])
-
-  // messageEndRef.current.value = "";
-
-  const getPost = (newPost: PostObj) => {
-    console.log(newPost);
-    sendMessage(JSON.stringify({ outMessage: { changed: [], added: [newPost], deletedIds: [] }, prevPosts: posts }));
-  }
-
+  
+  const getAuthor = (author: Author) => { setAuthor(author) };
+  const getDeleteId = (id: string) => sendMessage(JSON.stringify({ outMessage: { changed: [], added: [], deletedIds: [id] }, prevPosts: posts }));
+  const getChangedId = (id: string) => setChangedPost(posts.find(p => p.id === id) ?? null);
+  const getPost = (newPost: PostObj) => sendMessage(JSON.stringify({ outMessage: { changed: [], added: [newPost], deletedIds: [] }, prevPosts: posts }));
   const getChangedPost = (newPost: PostObj) => {
-    console.log(newPost);
     sendMessage(JSON.stringify({ outMessage: { changed: [newPost], added: [], deletedIds: [] }, prevPosts: posts }));
+    setChangedPost(null);
   }
-
-  // const handleClickSendMessage = 
-  //   useCallback(
-  //   () => {
-  //   sendMessage(JSON.stringify({outMessage:outMessage,prevPosts:posts}));
-  //   setOutMessage({changed:[] ,added:[] , deletedIds:[]});
-  //   }
-  //   , [outMessage]);
-
-  // console.log("color ", Math.floor(Math.random() * colors.length));
-  // console.log("Colors, ", colors);
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
@@ -92,7 +57,7 @@ function App() {
 
   return (
     <div className="App" >
-
+      <Header />
       <div className='body'>
         {status === "Landing" && <LandingPage
           setStatus={setStatus}
@@ -100,24 +65,18 @@ function App() {
           logo={logoCat}
           color={color} />}
         {status == "Content" &&
-          <div>
-            <p>WebSocket is {connectionStatus}</p>
-            <div className='Posts' style={{ backgroundColor: color.c3 }}>
+          <div className='main' style={{backgroundColor: color.c1, margin:" 0 1rem", paddingBottom:"0.1rem", borderRadius:"1rem"}}>
+            <p className='infoWS'>Chat channel is {connectionStatus}</p>
+            <div className='Posts' style={{ backgroundColor: color.c2 }}>
               {
-                posts.length == 0 ?
+                (posts.length === 0) ?
                   < EmptyPage /> : posts.map((p, index) =>
-                    <Post key={index} post={p} getDeleteId={getDeleteId} getChangedId = {getChangedId}/>)
+                    <Post key={index} owner={author} post={p} getDeleteId={getDeleteId} getChangedId = {getChangedId} />)
               }
               <div className='messageEndRef' ref={messageEndRef} />
             </div>
-            {/* <button className='barButton-confirm'
-              onClick={handleClickSendMessage}
-              disabled={readyState !== ReadyState.OPEN}>
-              Confirm Updates
-            </button> */}
             <EditorBlock
               author={author}
-              //getNewPost = {getNewPost} 
               changedPost = {changedPost}
               getPost={getPost} 
               getChangedPost = {getChangedPost}
@@ -125,6 +84,7 @@ function App() {
           </div>
         }
       </div>
+      <Footer />
     </div>
   );
 }

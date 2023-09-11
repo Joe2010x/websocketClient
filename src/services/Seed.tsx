@@ -9,7 +9,8 @@ const post1 : PostObj = {
     content : "It is a new chapter.",
     author : {
       name : "Jackson",
-      avatar: "https://api.multiavatar.com/Elisa.svg"
+      avatar: "https://api.multiavatar.com/Elisa.svg",
+      id : uuidv4()
     }
   }
 
@@ -20,7 +21,8 @@ const post2 : PostObj = {
     content : "It is a new chapter 2.",
     author : {
       name : "Jackson",
-      avatar: "https://api.multiavatar.com/anna.svg"
+      avatar: "https://api.multiavatar.com/anna.svg",
+      id : uuidv4()
     }
 }
 
