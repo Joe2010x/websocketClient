@@ -14,12 +14,16 @@ export interface PostObj {
 
 type props = {
     post : PostObj,
-    getDeleteId : (id:string) => void
+    getDeleteId : (id:string) => void,
+    getChangedId : (id:string) => void
 }
 
-export const Post = ({ post, getDeleteId }: props) => {
+export const Post = ({ post, getDeleteId, getChangedId }: props) => {
     const handleDelete = () =>{
         getDeleteId (post.id);
+    };
+    const hangleChanged = () =>{
+        getChangedId (post.id);
     }
     return (
         <div className='post' style={{backgroundColor: color.c5}}>
@@ -27,6 +31,7 @@ export const Post = ({ post, getDeleteId }: props) => {
                 <img className='avatarPost' src={post.author?.avatar} />
                 <span>{post.author?.name}</span>
                 <button className='DelBtn' onClick={handleDelete}>Delete</button>
+                <button className='DelBtn' onClick={hangleChanged}>change</button>
 
             </div>
             <div className='post-content'>

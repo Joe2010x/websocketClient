@@ -2,9 +2,10 @@ import { TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
 import { IconSearch, IconArrowRight, IconArrowLeft } from "@tabler/icons-react";
 import {useState} from 'react';
 import { getNameOfDeclaration } from 'typescript';
+import { colorType } from '../services/Color';
  
 type TextInputProps = {
-  // color : string [],
+  // color : colorType,
   getName : (value : string) => void,
   text : string,
   // getName : (value : string) => void

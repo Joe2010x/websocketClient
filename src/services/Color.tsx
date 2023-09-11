@@ -112,3 +112,10 @@ export const colors = [
         c4:"#5C8D89"
     }
 ]
+
+export type colorType = {
+    c1: string,
+    c2: string,
+    c3: string,
+    c4: string,
+}

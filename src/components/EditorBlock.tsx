@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Author } from './Author'
 import { color } from '../services/Color'
 import { PostObj } from './Post'
@@ -8,19 +8,29 @@ import { outMessageType } from '../services/SomeTypes'
 
 type EditorBlockType = {
     author: Author | null,
+    changedPost : PostObj | null,
     // getNewPost: (post: PostObj) => void,
     // sendMessage : (outMessage: string) =>void,
     getPost : (newPost: PostObj) => void,
+    getChangedPost : (newPost: PostObj) => void,
     //setOutMessage : (prev : outMessageType ) => void
 }
 
-export const EditorBlock = ({ author, getPost}: EditorBlockType) => {
+export const EditorBlock = ({ author, getPost, changedPost, getChangedPost}: EditorBlockType) => {
     const [title, setTitle] = useState<string>("");
-    const [content, setContent] = useState<string>("");
+    const [content, setContent] = useState<string>( "");
+
+    useEffect(() => {
+        if (changedPost !== null) {
+            console.log("it is changed post", changedPost.content);
+            setContent(changedPost.content);
+        }
+
+    }, [changedPost])
 
     const handlePost = () => {
         let post: PostObj = {
-            id: uuidv4(),
+            id: changedPost ? changedPost.id : uuidv4(),
             title: title,
             content: content,
             created: new Date(Date.now()),
@@ -28,7 +38,10 @@ export const EditorBlock = ({ author, getPost}: EditorBlockType) => {
         }
         setTitle("");
         setContent("");
-        (post.content !== "") && getPost(post);
+        if (post.content !== "") {
+            if (changedPost) getChangedPost(post);
+            else getPost(post);
+        }
         //getNewPost(post);
     }
 
