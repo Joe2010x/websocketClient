@@ -10,12 +10,7 @@ type landingPageType = {
     getAuthor: (author: Author) => void,
     setStatus: (status: string) => void,
     logo: any,
-    color: {
-        c1: string,
-        c2: string,
-        c3: string,
-        c4: string,
-    }
+    color: colorType
 }
 
 export const LandingPage = ({ getAuthor, setStatus, logo, color }: landingPageType) => {
@@ -55,7 +50,7 @@ export const LandingPage = ({ getAuthor, setStatus, logo, color }: landingPageTy
             </div>
 
             <div className="landingInputDiv" 
-                style = {{backgroundColor:"lightgray", borderRadius:"2rem"}}>
+                style = {{backgroundColor:color.c1, borderRadius:"2rem"}}>
                 <InputWithButton text={""} getName= {handleClick} placeholder={"name"}/>
                 {/* custom input + buttom */}
             </div>

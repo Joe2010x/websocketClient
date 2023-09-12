@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 import { useEffect, useState } from 'react'
 import { Author } from './Author'
-import { color } from '../services/Color'
+import { colorType } from '../services/Color'
 import { PostObj } from './Post'
 import { v4 as uuidv4 } from 'uuid';
 import { outMessageType } from '../services/SomeTypes'
@@ -15,10 +15,11 @@ type EditorBlockType = {
     // sendMessage : (outMessage: string) =>void,
     getPost: (newPost: PostObj) => void,
     getChangedPost: (newPost: PostObj) => void,
+    color: colorType 
     //setOutMessage : (prev : outMessageType ) => void
 }
 
-export const EditorBlock = ({ author, getPost, changedPost, getChangedPost }: EditorBlockType) => {
+export const EditorBlock = ({ author, getPost, changedPost, getChangedPost, color }: EditorBlockType) => {
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const [placeholder, setPlaceholder] = useState<string>("");

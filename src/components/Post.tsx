@@ -1,8 +1,9 @@
 
 import { Author } from './Author';
 import { AuthorComponent } from './Author';
-import { color } from '../services/Color';
+import { colorType } from '../services/Color';
 import { useState } from 'react';
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 export interface PostObj {
     id: string;
@@ -17,10 +18,11 @@ type props = {
     post: PostObj,
     owner: Author | null,
     getDeleteId: (id: string) => void,
-    getChangedId: (id: string) => void
+    getChangedId: (id: string) => void,
+    color: colorType
 }
 
-export const Post = ({ post, owner, getDeleteId, getChangedId }: props) => {
+export const Post = ({ post, owner, getDeleteId, getChangedId, color }: props) => {
     const [buttonVisuability, setButtonVisuability] = useState(false);
     const handleDelete = () => {
         getDeleteId(post.id);
@@ -32,18 +34,18 @@ export const Post = ({ post, owner, getDeleteId, getChangedId }: props) => {
         <div>
         <div className='post' >
             
-            <div className='post-name' style={{backgroundColor:color.c4}}>
+            <div className='post-name' style={{backgroundColor:color.c3}}>
                 <img className='avatarPost' src={post.author?.avatar} />
                 <span>{post.author?.name}</span>
                 
             </div>
-            <div className='post-content' style={{backgroundColor:color.c4}} onClick = {() => setButtonVisuability(!buttonVisuability)}>
+            <div className='post-content' style={{backgroundColor:color.c3}} onClick = {() => setButtonVisuability(!buttonVisuability)}>
                 <p className='post-content-words'>{post.content}</p>
-                {owner?.id === post.author.id && buttonVisuability && <button className='DelBtn' 
-                style = {{backgroundColor:"red", height:"0.6rem", width:"0.6rem"}}
+                {owner?.id === post.author.id && buttonVisuability && <AiOutlineDelete className='DelBtn' 
+                style = {{backgroundColor:"black", height:"0.6rem", width:"0.6rem"}}
                 onClick={handleDelete} />}
-                {owner?.id === post.author.id && buttonVisuability && <button className='ChangeBtn' 
-                style = {{backgroundColor:"yellow", height:"0.6rem", width:"0.6rem"}}
+                {owner?.id === post.author.id && buttonVisuability && <AiOutlineEdit className='ChangeBtn' 
+                style = {{backgroundColor:"black", height:"0.6rem", width:"0.6rem"}}
                 onClick={hangleChanged}/>}
             </div>
 

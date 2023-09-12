@@ -58,6 +58,11 @@ function App() {
   return (
     <div className="App" >
       <Header />
+      <div style={{display: "flex", flexDirection:"row"}}>
+        {colors.map( c => 
+        <div style={{backgroundColor:c.c1, padding:"1rem"}} onClick = {() => setColor(c)} ></div>
+        )}
+      </div>
       <div className='body'>
         {status === "Landing" && <LandingPage
           setStatus={setStatus}
@@ -71,7 +76,7 @@ function App() {
               {
                 (posts.length === 0) ?
                   < EmptyPage /> : posts.map((p, index) =>
-                    <Post key={index} owner={author} post={p} getDeleteId={getDeleteId} getChangedId = {getChangedId} />)
+                    <Post key={index} owner={author} post={p} getDeleteId={getDeleteId} getChangedId = {getChangedId} color={color}/>)
               }
               <div className='messageEndRef' ref={messageEndRef} />
             </div>
@@ -80,6 +85,7 @@ function App() {
               changedPost = {changedPost}
               getPost={getPost} 
               getChangedPost = {getChangedPost}
+              color = {color}
               />
           </div>
         }
