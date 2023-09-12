@@ -38,10 +38,13 @@ export const Post = ({ post, owner, getDeleteId, getChangedId }: props) => {
                 
             </div>
             <div className='post-content' style={{backgroundColor:color.c4}} onClick = {() => setButtonVisuability(!buttonVisuability)}>
-                {/* <h2>{post.title ?? ""}</h2> */}
                 <p className='post-content-words'>{post.content}</p>
-                {owner?.id === post.author.id && buttonVisuability && <button className='DelBtn' onClick={handleDelete}>x</button>}
-                {owner?.id === post.author.id && buttonVisuability && <button className='ChangeBtn' onClick={hangleChanged}>change</button>}
+                {owner?.id === post.author.id && buttonVisuability && <button className='DelBtn' 
+                style = {{backgroundColor:"red", height:"0.6rem", width:"0.6rem"}}
+                onClick={handleDelete} />}
+                {owner?.id === post.author.id && buttonVisuability && <button className='ChangeBtn' 
+                style = {{backgroundColor:"yellow", height:"0.6rem", width:"0.6rem"}}
+                onClick={hangleChanged}/>}
             </div>
 
         </div>
