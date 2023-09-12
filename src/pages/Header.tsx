@@ -1,7 +1,7 @@
 const Header = () => {
     return (
         <div className="Header">
-            Hyper Island FE24
+            Header
         </div>
     )
 }
