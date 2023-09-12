@@ -58,7 +58,9 @@ function App() {
   return (
     <div className="App" >
       <Header />
-      <div style={{display: "flex", flexDirection:"row"}}>
+      <div style={{display: "flex", flexDirection:"row", overflow:"auto"}}>
+
+        <div style={{backgroundColor:"lightgray", padding:"1rem"}} onClick = {() => setColor((colors[Math.floor(Math.random() * colors.length)]))} ></div>
         {colors.map( c => 
         <div style={{backgroundColor:c.c1, padding:"1rem"}} onClick = {() => setColor(c)} ></div>
         )}
@@ -71,7 +73,7 @@ function App() {
           color={color} />}
         {status == "Content" &&
           <div className='main' style={{backgroundColor: color.c1, margin:" 0 1rem", paddingBottom:"0.1rem", borderRadius:"1rem"}}>
-            <p className='infoWS'>Chat channel is {connectionStatus}</p>
+            <div className='infoWS'>Chat channel is {connectionStatus}</div>
             <div className='Posts' style={{ backgroundColor: color.c2 }}>
               {
                 (posts.length === 0) ?
