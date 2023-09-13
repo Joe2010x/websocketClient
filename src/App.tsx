@@ -58,11 +58,11 @@ function App() {
   return (
     <div className="App" >
       <Header />
-      <div style={{display: "flex", flexDirection:"row", overflow:"auto"}}>
+      <div data-testid='colorBar' style={{display: "flex", flexDirection:"row", overflow:"auto"}}>
 
         <div style={{backgroundColor:"lightgray", padding:"1rem"}} onClick = {() => setColor((colors[Math.floor(Math.random() * colors.length)]))} ></div>
-        {colors.map( c => 
-        <div style={{backgroundColor:c.c1, padding:"1rem"}} onClick = {() => setColor(c)} ></div>
+        {colors.map( (c, index) => 
+        <div key= {index} style={{backgroundColor:c.c1, padding:"1rem"}} onClick = {() => setColor(c)} ></div>
         )}
       </div>
       <div className='body'>

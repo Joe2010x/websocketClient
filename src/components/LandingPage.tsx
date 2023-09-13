@@ -49,7 +49,7 @@ export const LandingPage = ({ getAuthor, setStatus, logo, color }: landingPageTy
                 <h1>Talktive Kat</h1>
             </div>
 
-            <div className="landingInputDiv" 
+            <div className="landingInputDiv" data-testid ="inputDiv"
                 style = {{backgroundColor:color.c1, borderRadius:"2rem"}}>
                 <InputWithButton text={""} getName= {handleClick} placeholder={"name"}/>
                 {/* custom input + buttom */}
